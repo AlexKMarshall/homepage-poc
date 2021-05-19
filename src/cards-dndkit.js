@@ -14,8 +14,41 @@ import {
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import styled from "styled-components";
+import { useEditMode } from "./homepage";
 
 export function CardsWidget({ items, onCardsReorder, itemDetails }) {
+  const { isEditMode } = useEditMode();
+
+  return (
+    <SCards>
+      {isEditMode ? (
+        <EditableCards items={items} onCardsReorder={onCardsReorder}>
+          {items.map(({ uid, span, position }) => (
+            <SortableCard
+              key={uid}
+              uid={uid}
+              span={span}
+              position={position}
+              cardDetails={itemDetails[uid]}
+            />
+          ))}
+        </EditableCards>
+      ) : (
+        items.map(({ uid, span, position }) => (
+          <Card
+            key={uid}
+            uid={uid}
+            span={span}
+            position={position}
+            cardDetails={itemDetails[uid]}
+          />
+        ))
+      )}
+    </SCards>
+  );
+}
+
+function EditableCards({ items, onCardsReorder, children }) {
   const itemsWithId = useMemo(
     () => items.map((item) => ({ ...item, id: item.uid })),
     [items]
@@ -40,17 +73,7 @@ export function CardsWidget({ items, onCardsReorder, itemDetails }) {
         items={itemsWithId}
         strategy={horizontalListSortingStrategy}
       >
-        <SCards>
-          {itemsWithId.map(({ uid, span, position }) => (
-            <SortableCard
-              key={uid}
-              uid={uid}
-              span={span}
-              position={position}
-              cardDetails={itemDetails[uid]}
-            />
-          ))}
-        </SCards>
+        {children}
       </SortableContext>
     </DndContext>
   );
@@ -73,7 +96,7 @@ function SortableCard({ uid, span, cardDetails, position }) {
     transition,
   };
   return (
-    <CardWithRef
+    <EditableCardWithRef
       ref={setNodeRef}
       style={style}
       {...attributes}
@@ -85,7 +108,10 @@ function SortableCard({ uid, span, cardDetails, position }) {
   );
 }
 
-function Card({ span, children, cardDetails, position, ...props }, ref) {
+function EditableCard(
+  { span, children, cardDetails, position, ...props },
+  ref
+) {
   const { title, imgUrl, description } = cardDetails;
   return (
     <SCard colSpan={span} {...props} ref={ref}>
@@ -97,7 +123,19 @@ function Card({ span, children, cardDetails, position, ...props }, ref) {
   );
 }
 
-const CardWithRef = forwardRef(Card);
+const EditableCardWithRef = forwardRef(EditableCard);
+
+function Card({ span, children, cardDetails, position, ...props }) {
+  const { title, imgUrl, description } = cardDetails;
+  return (
+    <SCard colSpan={span} {...props}>
+      <h3>{title}</h3>
+      <p>position: {position}</p>
+      <p>image: {imgUrl}</p>
+      <p>{description}</p>
+    </SCard>
+  );
+}
 
 const SCard = styled.div`
   height: 300px;

@@ -1,8 +1,38 @@
-import React, { useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import styled from "styled-components";
 import { arrayMove } from "./utils";
 import { queryLayoutData, querySingleWidget } from "./mockData";
 import { CardsWidget } from "./cards-dndkit";
+
+const EditModeContext = React.createContext();
+EditModeContext.displayName = "EditModeContext";
+
+export function EditModeProvider({ children }) {
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  const toggleEditMode = useCallback(() =>
+    setIsEditMode((isEditMode) => !isEditMode)
+  );
+
+  const value = {
+    isEditMode,
+    toggleEditMode,
+  };
+
+  return (
+    <EditModeContext.Provider value={value}>
+      {children}
+    </EditModeContext.Provider>
+  );
+}
+
+export function useEditMode() {
+  const context = useContext(EditModeContext);
+  if (context === undefined) {
+    throw new Error("useEditMode must be used within an EditModeProvider");
+  }
+  return context;
+}
 
 export default function Homepage() {
   const [layoutData, setLayoutData] = useState(() => queryLayoutData());
@@ -11,6 +41,8 @@ export default function Homepage() {
       project_homepage: { project, sections },
     },
   } = layoutData;
+
+  const { isEditMode, toggleEditMode } = useEditMode();
 
   function handleWidgetItemsReorder(sectionId, widgetId, { activeId, overId }) {
     if (activeId === overId) return; // nothing changed
@@ -92,6 +124,9 @@ export default function Homepage() {
   return (
     <div>
       <h1>{project.name}</h1>
+      <button onClick={toggleEditMode}>
+        {isEditMode ? "Editing" : "Read-Only"}
+      </button>
       {sections.map((section) => (
         <Stack key={section.uid}>
           <h2>{section.name}</h2>
@@ -107,7 +142,7 @@ export default function Homepage() {
                   })
                 }
               />
-              {index !== 0 && (
+              {index !== 0 && isEditMode && (
                 <button
                   key={`${widget.uid}-upbutton`}
                   onClick={() =>
@@ -120,7 +155,7 @@ export default function Homepage() {
                   Move up
                 </button>
               )}
-              {index !== arr.length - 1 && (
+              {index !== arr.length - 1 && isEditMode && (
                 <button
                   key={`${widget.uid}-downbutton`}
                   onClick={() =>

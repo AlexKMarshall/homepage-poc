@@ -1,9 +1,11 @@
-import Homepage from "./homepage";
+import Homepage, { EditModeProvider } from "./homepage";
 
 function App() {
   return (
     <div className="App">
-      <Homepage />
+      <EditModeProvider>
+        <Homepage />
+      </EditModeProvider>
     </div>
   );
 }
