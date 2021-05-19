@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { arrayMove } from "./utils";
-import { mockLayoutData } from "./mockData";
+import { queryLayoutData, querySingleWidget } from "./mockData";
 import { CardsWidget } from "./cards-dndkit";
 
 export default function Homepage() {
-  const [layoutData, setLayoutData] = useState(mockLayoutData);
+  const [layoutData, setLayoutData] = useState(() => queryLayoutData());
   const {
     data: {
       project_homepage: { project, sections },
@@ -78,27 +78,58 @@ export default function Homepage() {
 }
 
 function Widget({ uid, type, items, onWidgetItemsReorder }) {
+  const widgetDetails = querySingleWidget(uid);
+
   switch (type) {
     case "cards":
       return (
-        <CardsWidget items={items} onCardsReorder={onWidgetItemsReorder} />
+        <CardsWidget
+          items={items}
+          itemDetails={widgetDetails.itemDetails}
+          onCardsReorder={onWidgetItemsReorder}
+        />
       );
     case "headline":
-      return <Headline />;
+      return (
+        <Headline
+          title={widgetDetails.title}
+          description={widgetDetails.description}
+        />
+      );
     case "hero":
-      return <Hero />;
+      return <Hero title={widgetDetails.title} imgUrl={widgetDetails.imgUrl} />;
     default:
       throw new Error(`Unexpected widget type "${type}"`);
   }
 }
 
-function Headline() {
-  return <div>Headling</div>;
+function Headline({ title, description }) {
+  return (
+    <SHeadline>
+      <h2>Headline Widget "{title}"</h2>
+      <p>{description}</p>
+    </SHeadline>
+  );
 }
 
-function Hero() {
-  return <div>Hero</div>;
+const SHeadline = styled.div`
+  padding: 2rem;
+  border: 1px solid black;
+`;
+
+function Hero({ title, imgUrl }) {
+  return (
+    <SHero>
+      <h2>Hero Widget "{title}"</h2>
+      <p>img url {imgUrl}</p>
+    </SHero>
+  );
 }
+
+const SHero = styled.div`
+  padding: 2rem;
+  border: 1px solid black;
+`;
 
 const Stack = styled.div`
   display: flex;

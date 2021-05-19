@@ -1,190 +1,253 @@
-// eslint-disable-next-line import/prefer-default-export
-export const mockLayoutData = {
+import faker from "faker";
+
+const backendData = {
   data: {
     project_homepage: {
-      uid: "abcde",
+      uid: faker.datatype.uuid(),
       project: {
-        uid: "bcdeg",
-        name: "Project Name",
+        uid: faker.datatype.uuid(),
+        name: faker.company.companyName(),
       },
       sections: [
         {
           position: 1,
-          uid: "cdegh",
-          name: "Disrupting Meal Patterns",
+          uid: faker.datatype.uuid(),
+          name: faker.company.catchPhrase(),
           widgets: [
             {
               position: 1,
-              uid: "deghi",
+              uid: faker.datatype.uuid(),
               type: "cards",
               items: [
                 {
                   position: 1,
-                  uid: "eghij",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
                 {
                   position: 2,
-                  uid: "eghik",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
                 {
                   position: 3,
-                  uid: "ghikl",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
               ],
             },
             {
               position: 2,
-              uid: "hiklm",
+              uid: faker.datatype.uuid(),
               type: "cards",
               items: [
                 {
                   position: 1,
-                  uid: "iklmn",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
                 {
                   position: 2,
-                  uid: "i0lmn",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
                 {
                   position: 3,
-                  uid: "klmno",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
               ],
             },
             {
               position: 3,
-              uid: "lmnop",
+              uid: faker.datatype.uuid(),
               type: "cards",
               items: [
                 {
                   position: 1,
-                  uid: "mnopq",
+                  uid: faker.datatype.uuid(),
                   span: 8,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
                 {
                   position: 3,
-                  uid: "nopqr",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
               ],
             },
             {
               position: 4,
-              uid: "opqrs",
+              uid: faker.datatype.uuid(),
               type: "cards",
               items: [
                 {
                   position: 1,
-                  uid: "pqrst",
+                  uid: faker.datatype.uuid(),
                   span: 12,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
               ],
             },
             {
               position: 5,
-              uid: "qrstu",
+              uid: faker.datatype.uuid(),
               type: "headline",
+              title: faker.company.bsBuzz(),
+              description: faker.lorem.sentence(),
             },
             {
               position: 6,
-              uid: "rstuv",
+              uid: faker.datatype.uuid(),
               type: "hero",
+              title: faker.company.bsBuzz(),
+              imgUrl: faker.image.imageUrl(),
             },
           ],
         },
         {
           position: 2,
-          uid: "cdegi",
-          name: "Reducing Food Waste",
+          uid: faker.datatype.uuid(),
+          name: faker.company.catchPhrase(),
           widgets: [
             {
               position: 1,
-              uid: "zeghi",
+              uid: faker.datatype.uuid(),
               type: "cards",
               items: [
                 {
                   position: 1,
-                  uid: "zghij",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
                 {
                   position: 2,
-                  uid: "zghik",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
                 {
                   position: 3,
-                  uid: "zhikl",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
               ],
             },
             {
               position: 2,
-              uid: "ziklm",
+              uid: faker.datatype.uuid(),
               type: "cards",
               items: [
                 {
                   position: 1,
-                  uid: "zklmn",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
                 {
                   position: 2,
-                  uid: "z0lmn",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
                 {
                   position: 3,
-                  uid: "zlmno",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
               ],
             },
             {
               position: 3,
-              uid: "zmnop",
+              uid: faker.datatype.uuid(),
               type: "cards",
               items: [
                 {
                   position: 1,
-                  uid: "znopq",
+                  uid: faker.datatype.uuid(),
                   span: 8,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
                 {
                   position: 3,
-                  uid: "zopqr",
+                  uid: faker.datatype.uuid(),
                   span: 4,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
               ],
             },
             {
               position: 4,
-              uid: "zpqrs",
+              uid: faker.datatype.uuid(),
               type: "cards",
               items: [
                 {
                   position: 1,
-                  uid: "zqrst",
+                  uid: faker.datatype.uuid(),
                   span: 12,
+                  title: faker.company.bsBuzz(),
+                  imgUrl: faker.image.imageUrl(),
+                  description: faker.lorem.sentence(),
                 },
               ],
             },
             {
               position: 5,
-              uid: "zrstu",
+              uid: faker.datatype.uuid(),
               type: "headline",
+              title: faker.company.bsBuzz(),
+              description: faker.lorem.sentence(),
             },
             {
               position: 6,
-              uid: "zstuv",
+              uid: faker.datatype.uuid(),
               type: "hero",
+              title: faker.company.bsBuzz(),
+              imgUrl: faker.image.imageUrl(),
             },
           ],
         },
@@ -192,3 +255,52 @@ export const mockLayoutData = {
     },
   },
 };
+
+// this gives us just the layout information
+export function queryLayoutData() {
+  return {
+    ...backendData,
+    data: {
+      ...backendData.data,
+      project_homepage: {
+        ...backendData.data.project_homepage,
+        sections: backendData.data.project_homepage.sections.map((section) => ({
+          ...section,
+          widgets: section.widgets.map((widget) => ({
+            uid: widget.uid,
+            position: widget.position,
+            type: widget.type,
+            items: widget.items?.map((item) => ({
+              uid: item.uid,
+              position: item.position,
+              span: item.span,
+            })),
+          })),
+        })),
+      },
+    },
+  };
+}
+
+function allWidgets() {
+  return backendData.data.project_homepage.sections.flatMap(
+    (section) => section.widgets
+  );
+}
+
+// this gives us the details of a single widget, and for cards it
+// gives us the items in a hash object, rather than an array
+// so the layout and content can be separate on the front end
+export function querySingleWidget(widgetUid) {
+  const backendWidget = allWidgets().find((widget) => widget.uid === widgetUid);
+  if (backendWidget) {
+    const { items, ...widgetDetails } = {
+      ...backendWidget,
+      itemDetails: backendWidget.items?.reduce(
+        (acc, cur) => Object.assign(acc, { [cur.uid]: cur }),
+        {}
+      ),
+    };
+    return widgetDetails;
+  }
+}

@@ -15,7 +15,7 @@ import {
 } from "@dnd-kit/sortable";
 import styled from "styled-components";
 
-export function CardsWidget({ items, onCardsReorder }) {
+export function CardsWidget({ items, onCardsReorder, itemDetails }) {
   const itemsWithId = useMemo(
     () => items.map((item) => ({ ...item, id: item.uid })),
     [items]
@@ -42,7 +42,12 @@ export function CardsWidget({ items, onCardsReorder }) {
       >
         <SCards>
           {itemsWithId.map(({ uid, span }) => (
-            <SortableCard key={uid} uid={uid} span={span} />
+            <SortableCard
+              key={uid}
+              uid={uid}
+              span={span}
+              cardDetails={itemDetails[uid]}
+            />
           ))}
         </SCards>
       </SortableContext>
@@ -56,7 +61,7 @@ const SCards = styled.div`
   column-gap: 16px;
 `;
 
-function SortableCard({ uid, name, span }) {
+function SortableCard({ uid, span, cardDetails }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: uid });
 
@@ -73,16 +78,18 @@ function SortableCard({ uid, name, span }) {
       {...attributes}
       {...listeners}
       colSpan={span}
-    >
-      {uid}
-    </CardWithRef>
+      cardDetails={cardDetails}
+    />
   );
 }
 
-function Card({ uid, span, children, ...props }, ref) {
+function Card({ span, children, cardDetails, ...props }, ref) {
+  const { title, imgUrl, description } = cardDetails;
   return (
     <SCard colSpan={span} {...props} ref={ref}>
-      {children}
+      <h3>{title}</h3>
+      <p>image: {imgUrl}</p>
+      <p>{description}</p>
     </SCard>
   );
 }
@@ -92,5 +99,6 @@ const CardWithRef = forwardRef(Card);
 const SCard = styled.div`
   height: 300px;
   border: 1px solid black;
+  padding: 2rem;
   grid-column: span ${(p) => p.colSpan};
 `;
