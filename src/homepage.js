@@ -55,6 +55,40 @@ export default function Homepage() {
     });
   }
 
+  function handleWidgetReorder(sectionId, { activeId, direction }) {
+    setLayoutData((oldLayout) => {
+      const widgetsArray = oldLayout.data.project_homepage.sections.find(
+        (section) => section.uid === sectionId
+      ).widgets;
+
+      const oldIndex = widgetsArray.findIndex(({ uid }) => uid === activeId);
+      const newIndex = oldIndex + (direction === "up" ? -1 : 1);
+
+      const updatedWidgetsArray = arrayMove(widgetsArray, oldIndex, newIndex);
+      const updatedWidgetsArryWithPositions = updatedWidgetsArray.map(
+        (widget, index) => ({ ...widget, position: index + 1 })
+      );
+
+      return {
+        ...oldLayout,
+        data: {
+          ...oldLayout.data,
+          project_homepage: {
+            ...oldLayout.data.project_homepage,
+            sections: oldLayout.data.project_homepage.sections.map((section) =>
+              section.uid === sectionId
+                ? {
+                    ...section,
+                    widgets: updatedWidgetsArryWithPositions,
+                  }
+                : section
+            ),
+          },
+        },
+      };
+    });
+  }
+
   return (
     <div>
       <h1>{project.name}</h1>
@@ -62,17 +96,44 @@ export default function Homepage() {
         <Stack key={section.uid}>
           <h2>{section.name}</h2>
 
-          {section.widgets.map((widget) => (
-            <Widget
-              key={widget.uid}
-              {...widget}
-              onWidgetItemsReorder={({ activeId, overId }) =>
-                handleWidgetItemsReorder(section.uid, widget.uid, {
-                  activeId,
-                  overId,
-                })
-              }
-            />
+          {section.widgets.map((widget, index, arr) => (
+            <div key={widget.uid}>
+              <Widget
+                {...widget}
+                onWidgetItemsReorder={({ activeId, overId }) =>
+                  handleWidgetItemsReorder(section.uid, widget.uid, {
+                    activeId,
+                    overId,
+                  })
+                }
+              />
+              {index !== 0 && (
+                <button
+                  key={`${widget.uid}-upbutton`}
+                  onClick={() =>
+                    handleWidgetReorder(section.uid, {
+                      activeId: widget.uid,
+                      direction: "up",
+                    })
+                  }
+                >
+                  Move up
+                </button>
+              )}
+              {index !== arr.length - 1 && (
+                <button
+                  key={`${widget.uid}-downbutton`}
+                  onClick={() =>
+                    handleWidgetReorder(section.uid, {
+                      activeId: widget.uid,
+                      direction: "down",
+                    })
+                  }
+                >
+                  Move down
+                </button>
+              )}
+            </div>
           ))}
         </Stack>
       ))}
