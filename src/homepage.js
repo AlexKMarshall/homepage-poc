@@ -24,6 +24,9 @@ export default function Homepage() {
       const newIndex = itemsArray.findIndex(({ uid }) => uid === overId);
 
       const updatedItemsArray = arrayMove(itemsArray, oldIndex, newIndex);
+      const updatedItemsArryWithPositions = updatedItemsArray.map(
+        (item, index) => ({ ...item, position: index + 1 })
+      );
 
       return {
         ...oldLayout,
@@ -39,7 +42,7 @@ export default function Homepage() {
                       widget.uid === widgetId
                         ? {
                             ...widget,
-                            items: updatedItemsArray,
+                            items: updatedItemsArryWithPositions,
                           }
                         : widget
                     ),

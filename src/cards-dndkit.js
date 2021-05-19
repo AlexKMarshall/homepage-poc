@@ -41,11 +41,12 @@ export function CardsWidget({ items, onCardsReorder, itemDetails }) {
         strategy={horizontalListSortingStrategy}
       >
         <SCards>
-          {itemsWithId.map(({ uid, span }) => (
+          {itemsWithId.map(({ uid, span, position }) => (
             <SortableCard
               key={uid}
               uid={uid}
               span={span}
+              position={position}
               cardDetails={itemDetails[uid]}
             />
           ))}
@@ -61,7 +62,7 @@ const SCards = styled.div`
   column-gap: 16px;
 `;
 
-function SortableCard({ uid, span, cardDetails }) {
+function SortableCard({ uid, span, cardDetails, position }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: uid });
 
@@ -79,15 +80,17 @@ function SortableCard({ uid, span, cardDetails }) {
       {...listeners}
       colSpan={span}
       cardDetails={cardDetails}
+      position={position}
     />
   );
 }
 
-function Card({ span, children, cardDetails, ...props }, ref) {
+function Card({ span, children, cardDetails, position, ...props }, ref) {
   const { title, imgUrl, description } = cardDetails;
   return (
     <SCard colSpan={span} {...props} ref={ref}>
       <h3>{title}</h3>
+      <p>position: {position}</p>
       <p>image: {imgUrl}</p>
       <p>{description}</p>
     </SCard>
