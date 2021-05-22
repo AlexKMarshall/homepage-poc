@@ -256,6 +256,62 @@ const backendData = {
   },
 };
 
+// trying a flatter structure for layout
+// this should make it easier to re-order individual widgets
+// as you don't have to recreate a deeply nested structure
+export function queryFlatLayoutData() {
+  return {
+    homepageDetails: {
+      project: backendData.data.project_homepage.project,
+      uid: backendData.data.project_homepage.uid,
+      sectionIds: backendData.data.project_homepage.sections.map(
+        (section) => section.uid
+      ),
+    },
+    sectionDetails: backendData.data.project_homepage.sections.reduce(
+      (acc, cur) => {
+        return Object.assign(acc, {
+          [cur.uid]: {
+            uid: cur.uid,
+            name: cur.name,
+            widgetIds: cur.widgets.map((widget) => widget.uid),
+          },
+        });
+      },
+      {}
+    ),
+    widgetDetails: backendData.data.project_homepage.sections
+      .flatMap((section) => section.widgets)
+      .reduce((acc, cur) => {
+        return Object.assign(acc, {
+          [cur.uid]: {
+            uid: cur.uid,
+            type: cur.type,
+            title: cur.title,
+            imgUrl: cur.imgUrl,
+            description: cur.description,
+            itemIds: cur.items?.map((item) => item.uid),
+          },
+        });
+      }, {}),
+    itemDetails: backendData.data.project_homepage.sections
+      .flatMap((section) => section.widgets)
+      .flatMap((widget) => widget.items)
+      .filter((item) => item !== undefined)
+      .reduce((acc, cur) => {
+        return Object.assign(acc, {
+          [cur.uid]: {
+            uid: cur.uid,
+            span: cur.span,
+            title: cur.title,
+            description: cur.description,
+            imgUrl: cur.imgUrl,
+          },
+        });
+      }, {}),
+  };
+}
+
 // this gives us just the layout information
 export function queryLayoutData() {
   return {

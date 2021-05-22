@@ -1,11 +1,14 @@
-import Homepage, { EditModeProvider } from "./homepage";
+import Homepage from "./homepage";
+import { HomepageDataProvider, EditModeProvider } from "./providers";
 
 function App() {
   return (
     <div className="App">
-      <EditModeProvider>
-        <Homepage />
-      </EditModeProvider>
+      <HomepageDataProvider>
+        <EditModeProvider>
+          <Homepage />
+        </EditModeProvider>
+      </HomepageDataProvider>
     </div>
   );
 }
