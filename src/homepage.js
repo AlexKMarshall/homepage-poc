@@ -6,7 +6,7 @@ export default function Homepage() {
   const { homepageData } = useHomepageData();
 
   const {
-    homepageDetails: { project: projectNew, sectionIds },
+    homepageDetails: { project: projectNew, sectionIds, size },
   } = homepageData;
 
   const { isEditMode, toggleEditMode } = useEditMode();
@@ -14,6 +14,7 @@ export default function Homepage() {
   return (
     <div>
       <h1>{projectNew.name}</h1>
+      <p>{size}</p>
       <button onClick={toggleEditMode}>
         {isEditMode ? "Editing" : "Read-Only"}
       </button>

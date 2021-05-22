@@ -1,6 +1,104 @@
 import faker from "faker";
 
-const backendData = {
+function buildCard(overrides) {
+  return {
+    uid: faker.datatype.uuid(),
+    span: 4,
+    title: faker.company.bsBuzz(),
+    imgUrl: faker.image.imageUrl(),
+    description: faker.lorem.sentence(),
+    ...overrides,
+  };
+}
+
+function randomPick(array) {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}
+
+function buildCardWidget(overrides = {}) {
+  const spanCombinations = [[12], [4, 8], [8, 4], [4, 4, 4]];
+  const combination = randomPick(spanCombinations);
+
+  return {
+    uid: faker.datatype.uuid(),
+    type: "cards",
+    items: combination.map((span) => buildCard({ span })),
+    ...overrides,
+  };
+}
+
+function buildHeroWidget(overrides = {}) {
+  return {
+    uid: faker.datatype.uuid(),
+    type: "hero",
+    title: faker.company.bsBuzz(),
+    imgUrl: faker.image.imageUrl(),
+    ...overrides,
+  };
+}
+
+function buildHeadlineWidget(overrides = {}) {
+  return {
+    uid: faker.datatype.uuid(),
+    type: "headline",
+    title: faker.company.bsBuzz(),
+    description: faker.lorem.sentence(),
+    ...overrides,
+  };
+}
+
+function buildWidget({ type } = {}) {
+  const types = ["cards", "headline", "hero"];
+  const selectedType =
+    type ?? Math.random() < 0.8 ? "cards" : randomPick(types);
+
+  switch (selectedType) {
+    case "cards":
+      return buildCardWidget();
+    case "hero":
+      return buildHeroWidget();
+    case "headline":
+      return buildHeadlineWidget();
+    default:
+      throw new Error(`Unexpected widget type: ${type}`);
+  }
+}
+
+function buildSection({ size } = {}) {
+  const numWidgets = size ?? faker.datatype.number(50);
+
+  return {
+    uid: faker.datatype.uuid(),
+    name: faker.company.catchPhrase(),
+    widgets: new Array(numWidgets).fill(undefined).map(() => buildWidget()),
+  };
+}
+
+function buildHomepageData({ size } = {}) {
+  const numSections = size ?? faker.datatype.number({ min: 2, max: 10 });
+
+  const sections = new Array(numSections)
+    .fill(undefined)
+    .map(() => buildSection());
+
+  return {
+    data: {
+      project_homepage: {
+        uid: faker.datatype.uuid(),
+        project: {
+          uid: faker.datatype.uuid(),
+          name: faker.company.companyName(),
+        },
+        sections,
+      },
+    },
+  };
+}
+
+const backendData = buildHomepageData();
+
+const backendDataOld = {
   data: {
     project_homepage: {
       uid: faker.datatype.uuid(),
@@ -260,9 +358,15 @@ const backendData = {
 // this should make it easier to re-order individual widgets
 // as you don't have to recreate a deeply nested structure
 export function queryFlatLayoutData() {
+  const numSections = backendData.data.project_homepage.sections.length;
+  const numWidgets = backendData.data.project_homepage.sections.flatMap(
+    (section) => section.widgets
+  ).length;
+
   return {
     homepageDetails: {
       project: backendData.data.project_homepage.project,
+      size: `${numSections} Sections and ${numWidgets} Widgets`,
       uid: backendData.data.project_homepage.uid,
       sectionIds: backendData.data.project_homepage.sections.map(
         (section) => section.uid
