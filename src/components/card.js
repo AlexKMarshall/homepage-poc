@@ -11,8 +11,14 @@ export function Card({ id }) {
 
 function CardEditMode({ id }) {
   const { card } = useCard(id);
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id });
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
 
   const style = {
     transform: transform
@@ -22,7 +28,13 @@ function CardEditMode({ id }) {
   };
 
   return (
-    <SCard colSpan={card.span} ref={setNodeRef} style={style} {...attributes}>
+    <SCard
+      colSpan={card.span}
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      isDragging={isDragging}
+    >
       <CardHeader>
         <h3>{card.title}</h3>
         <button {...listeners}>drag</button>
@@ -48,6 +60,8 @@ const SCard = styled.div`
   border: 1px solid black;
   padding: 2rem;
   grid-column: span ${(p) => p.colSpan};
+  background-color: cornsilk;
+  z-index: ${(p) => (p.isDragging ? 1 : 0)};
 `;
 
 const CardHeader = styled.div`
