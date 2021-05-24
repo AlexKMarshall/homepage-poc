@@ -5,6 +5,7 @@ import { useWidget } from "../hooks";
 import styled from "styled-components";
 import { useEditMode } from "../providers";
 import { ConditionalWrapper } from "./conditional-wrapper";
+import { motion } from "framer-motion";
 
 export function Widget({ id, moveWidget }) {
   const { widget } = useWidget(id);
@@ -43,7 +44,7 @@ function WidgetSelector({ widget }) {
 
 function WidgetEditWrapper({ id, moveWidget, children }) {
   return (
-    <SEditOutline>
+    <SEditOutline layout>
       {children}
       <button onClick={() => moveWidget(id, "up")}>Move up</button>
       <button onClick={() => moveWidget(id, "down")}>Move down</button>
@@ -51,7 +52,7 @@ function WidgetEditWrapper({ id, moveWidget, children }) {
   );
 }
 
-const SEditOutline = styled.div`
+const SEditOutline = styled(motion.div)`
   outline: 1px red dashed;
   outline-offset: 8px;
 `;
