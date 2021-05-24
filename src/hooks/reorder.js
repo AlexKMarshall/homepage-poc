@@ -23,7 +23,7 @@ export function useReorderWidgetItems(widgetId) {
 
   const { itemIds } = widget;
 
-  const reorderWidgetItems = useCallback(
+  const reorderWidgetItemsDrag = useCallback(
     (activeId, overId) => {
       if (activeId === overId) return; // nothing changed
       const oldIndex = itemIds.indexOf(activeId);
@@ -33,7 +33,7 @@ export function useReorderWidgetItems(widgetId) {
     [itemIds, reorderWidgetItemsIndex]
   );
 
-  return { reorderWidgetItems };
+  return { reorderWidgetItemsDrag };
 }
 
 export function useReorderWidgets(sectionId) {

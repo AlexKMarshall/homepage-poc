@@ -46,13 +46,15 @@ function CardsEditWrapper({ id, itemIds, children }) {
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
-  const { reorderWidgetItems } = useReorderWidgetItems(id);
+  const { reorderWidgetItemsDrag } = useReorderWidgetItems(id);
 
   return (
     <DndContext
       sensors={sensors}
       collisionDetection={closestCenter}
-      onDragEnd={({ active, over }) => reorderWidgetItems(active.id, over.id)}
+      onDragEnd={({ active, over }) =>
+        reorderWidgetItemsDrag(active.id, over.id)
+      }
     >
       <SortableContext items={itemIds} strategy={horizontalListSortingStrategy}>
         {children}

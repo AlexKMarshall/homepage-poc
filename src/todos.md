@@ -1,0 +1,9 @@
+- use CSS variables
+- add a widget
+- drag re-order of widgets
+- reorder sections
+- convert frontend data to backend data
+- figure out async queries
+- - how do you create a widget, then make some modifications, before the initial save of the widget has come back
+- framer motion
+- separate out sortable item from editable

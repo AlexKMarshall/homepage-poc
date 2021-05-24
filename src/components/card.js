@@ -71,7 +71,7 @@ const SCard = styled.div`
   border: 1px solid black;
   padding: 2rem;
   grid-column: span ${(p) => p.colSpan};
-  background-color: ${(p) => (p.isDragging ? "red" : "cornsilk")};
+  background-color: cornsilk;
   z-index: ${(p) => (p.isDragging ? 1 : 0)};
   ${(p) =>
     p.isDragging

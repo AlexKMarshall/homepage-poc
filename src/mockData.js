@@ -48,10 +48,10 @@ function buildHeadlineWidget(overrides = {}) {
   };
 }
 
-function buildWidget({ type } = {}) {
+export function buildWidget({ type } = {}) {
   const types = ["cards", "headline", "hero"];
   const selectedType =
-    type ?? Math.random() < 0.8 ? "cards" : randomPick(types);
+    type ?? (Math.random() < 0.8 ? "cards" : randomPick(types));
 
   switch (selectedType) {
     case "cards":

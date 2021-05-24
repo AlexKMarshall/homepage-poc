@@ -3,7 +3,7 @@ import { HomepageDataProvider, EditModeProvider } from "./providers";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{ padding: "1rem" }}>
       <HomepageDataProvider>
         <EditModeProvider>
           <Homepage />

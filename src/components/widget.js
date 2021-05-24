@@ -29,7 +29,13 @@ function WidgetSelector({ widget }) {
     case "headline":
       return <Headline title={widget.title} description={widget.description} />;
     case "hero":
-      return <Hero title={widget.title} imgUrl={widget.imgUrl} />;
+      return (
+        <Hero
+          title={widget.title}
+          imgUrl={widget.imgUrl}
+          status={widget.status}
+        />
+      );
     default:
       throw new Error(`Unexpected widget type "${widget.type}"`);
   }
@@ -47,4 +53,5 @@ function WidgetEditWrapper({ id, moveWidget, children }) {
 
 const SEditOutline = styled.div`
   outline: 1px red dashed;
+  outline-offset: 8px;
 `;
