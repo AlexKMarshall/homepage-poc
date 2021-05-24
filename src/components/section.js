@@ -2,7 +2,7 @@ import { Stack } from "./stack";
 import { useReorderWidgets, useSection } from "../hooks";
 import { Widget } from "./widget";
 import { useEditMode } from "../providers";
-import React, { useCallback } from "react";
+import React from "react";
 import { buildWidget } from "../mockData";
 
 export function Section({ id }) {
